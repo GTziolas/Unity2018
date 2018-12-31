@@ -15,7 +15,7 @@ public class CollectCube : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        howMuchLoot = Random.Range(1, 6);
+        howMuchLoot = 1;
 
     }
 
@@ -30,41 +30,52 @@ public class CollectCube : MonoBehaviour
 
         if (isWithinRange == true)
         {
-
+            //green,red,yellow,teal
             durability -= 1;
 
             if ((durability == 2) && lootMaterial == "green")
             {
                 gameObject.GetComponent<Renderer>().material = GreenTook1;
+                gameflow.invSlotQuant[0] += 1;
             }
 
             if ((durability == 1) && lootMaterial == "green")
             {
                 gameObject.GetComponent<Renderer>().material = GreenTook2;
+                gameflow.invSlotQuant[0] += 1;
             }
 
             if ((durability == 1) && lootMaterial == "red")
             {
                 gameObject.GetComponent<Renderer>().material = RedTook1;
+                gameflow.invSlotQuant[1] += 1;
             }
 
-            if (durability == 0)
+            if ((durability == 0) && lootMaterial == "green")
             {
-                if (gameflow.invSlot[0] == "")
-                {
-                    gameflow.invSlot[0] = lootMaterial;
-                    gameflow.invSlotQuant[0] += 1;
-                }
-                else if (gameflow.invSlot[1] == "")
-                {
-                    gameflow.invSlot[1] = lootMaterial;
-                    gameflow.invSlotQuant[1] += 1;
-                }
-                else if (gameflow.invSlot[2] == "")
-                {
-                    gameflow.invSlot[2] = lootMaterial;
-                    gameflow.invSlotQuant[2] += 1;
-                }
+
+                gameflow.invSlotQuant[0] += 1;
+            }
+
+            if ((durability == 0) && lootMaterial == "red")
+            {
+
+                gameflow.invSlotQuant[1] += 1;
+            }
+            if ((durability == 0) && lootMaterial == "yellow")
+            {
+
+                gameflow.invSlotQuant[2] += 1;
+            }
+
+            if ((durability == 0) && lootMaterial == "teal")
+            {
+
+                gameflow.invSlotQuant[3] += 1;
+            }
+
+            if (durability == 0 && lootMaterial != "blue")
+            {
 
                 Debug.Log(gameflow.invSlot[0] + " " + gameflow.invSlot[1] + " " + gameflow.invSlot[2]
                     + " " + gameflow.invSlotQuant[0] + " " + gameflow.invSlotQuant[1] + " " + gameflow.invSlotQuant[2]);
@@ -78,6 +89,11 @@ public class CollectCube : MonoBehaviour
         {
             print("Magenta cubes are immovable");
         }
+        if (lootMaterial == "blue")
+        {
+            doNothingOnBlue();
+            Destroy(gameObject);
+        }
 
     }
 
@@ -89,5 +105,10 @@ public class CollectCube : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         isWithinRange = false;
+    }
+
+    void doNothingOnBlue()
+    {
+        print("Blue has 0 mini cubes in it");
     }
 }

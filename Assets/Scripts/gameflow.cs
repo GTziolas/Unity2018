@@ -1,11 +1,12 @@
 ﻿/* 1. TODO na dinei to N o user
    2. TODO na topotheteitai i camera sto (round(Ν/2), round(Ν/2), 2) 
    dld sto kentro tou epipedou 2
-   3. TODO To cube sto (round(Ν/2), round(Ν/2), 1) na einai magenta 
+   
 */
 
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class gameflow : MonoBehaviour
 {
@@ -17,14 +18,25 @@ public class gameflow : MonoBehaviour
     public Transform magentaCube;
     public Camera cmr;
     public Light lght;
+    public Transform slot0text;
+    public Transform slot1text;
+    public Transform slot2text;
+    public Transform slot3text;
+
+    public Transform slot0Qtext;
+    public Transform slot1Qtext;
+    public Transform slot2Qtext;
+    public Transform slot3Qtext;
+
+    //green,red,yellow,teal(cylinder)
     public static List<string> invSlot = new List<string>()
     {
-        "", "", "", "", "", "", "", "", "", "",
+        "green", "red", "yellow", "teal"
     };
-
+    //green,red.yellow,teal(cylinder)
     public static List<int> invSlotQuant = new List<int>()
     {
-        0,0,0,0,0,0,0,0,0,0
+        0,0,0,0
     };
 
     public int N;
@@ -37,6 +49,7 @@ public class gameflow : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Cursor.visible = false;
 
         floorSize = N * 4; // each level is 4 in height
         if (N % 2 == 0) // N is even
@@ -49,12 +62,21 @@ public class gameflow : MonoBehaviour
             createOddGrid();
         }
 
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
     }
+
+    void Update()
+    {
+        slot0text.GetComponent<Text>().text = invSlot[0];
+        slot1text.GetComponent<Text>().text = invSlot[1];
+        slot2text.GetComponent<Text>().text = invSlot[2];
+        slot3text.GetComponent<Text>().text = invSlot[3];
+
+        slot0Qtext.GetComponent<Text>().text = invSlotQuant[0].ToString();
+        slot1Qtext.GetComponent<Text>().text = invSlotQuant[1].ToString();
+        slot2Qtext.GetComponent<Text>().text = invSlotQuant[2].ToString();
+        slot3Qtext.GetComponent<Text>().text = invSlotQuant[3].ToString();
+    }
+
     void createOddGrid()
     {
         Instantiate(magentaCube, new Vector3((N / 2), 0, (N / 2)), magentaCube.rotation);
