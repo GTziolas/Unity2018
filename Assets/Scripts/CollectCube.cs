@@ -11,7 +11,6 @@ public class CollectCube : MonoBehaviour
     public Material GreenTook2;
     public Material RedTook1;
 
-
     // Start is called before the first frame update
     void Start()
     {
